@@ -3,339 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Surtidito - Huautla de Jiménez</title>
+    <title>Mini Surtidito - Huautla</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff4e50;
-            --secondary: #f9d423;
-            --dark: #1a1a2e;
-            --success: #25d366;
-            --info: #3498db;
-            --oferta: #e74c3c;
-            --altura-imagen: 230px; 
+            --amazon-dark: #131921;
+            --amazon-orange: #febd69;
+            --bg-gray: #eaeded;
+            --success-green: #067D62;
         }
 
-        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; background: #f4f7f6; color: var(--dark); padding-bottom: 120px; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-gray); padding-bottom: 120px; }
 
-        .promo-bar { background: var(--dark); color: var(--secondary); text-align: center; padding: 10px; font-weight: bold; font-size: 0.9em; letter-spacing: 1px; }
+        header { background-color: var(--amazon-dark); padding: 15px 30px; position: sticky; top: 0; z-index: 1000; }
+        .header-content { max-width: 1400px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+        .brand { display: flex; align-items: center; gap: 15px; flex-shrink: 0; }
+        .img-huautla { width: 90px; height: 90px; border-radius: 8px; object-fit: cover; border: 2px solid var(--amazon-orange); }
+        .logo-text { font-size: 1.6em; font-weight: 700; color: var(--amazon-orange); text-decoration: none; }
+        .search-container { flex-grow: 1; display: flex; justify-content: center; }
+        .search-bar { width: 100%; max-width: 650px; }
+        .search-bar input { width: 100%; padding: 14px; border: none; border-radius: 8px; outline: none; font-size: 1em; }
 
-        header { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            color: white; padding: 40px 20px; text-align: center; 
-            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px;
-        }
+        .info-bar { background: #232f3e; color: white; text-align: center; padding: 8px; font-size: 0.85em; }
+        .delivery-banner { background: var(--success-green); color: white; text-align: center; padding: 12px; font-weight: bold; }
 
-        .delivery-highlight {
-            max-width: 800px; margin: 20px auto; background: white;
-            border-left: 8px solid var(--success); padding: 20px;
-            border-radius: 15px; display: flex; align-items: center;
-            gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .delivery-text h4 { margin: 0; color: var(--success); text-transform: uppercase; font-size: 1.1em; }
-        .delivery-text p { margin: 5px 0 0; font-size: 0.95em; font-weight: 500; }
+        .container { max-width: 1300px; margin: 30px auto; padding: 0 15px; }
 
-        .search-container { max-width: 600px; margin: -25px auto 10px; padding: 0 20px; }
-        .search-box { display: flex; background: white; padding: 10px 20px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .search-box input { border: none; width: 100%; padding: 10px; outline: none; font-size: 1em; }
-
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
-        h2.section-title { text-align: center; margin: 40px 0 20px; color: var(--dark); text-transform: uppercase; letter-spacing: 2px; }
-
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .product-card { background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; text-align: center; transition: 0.3s; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         
-        .card { 
-            background: white; border-radius: 20px; overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;
-            display: flex; flex-direction: column; position: relative;
-        }
+        /* Contenedor de imagen animada */
+        .img-container { height: 160px; position: relative; overflow: hidden; cursor: zoom-in; margin-bottom: 10px; background: #fff; }
+        .img-container img { height: 100%; width: 100%; object-fit: contain; position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 0.8s; }
+        .img-container img.active { opacity: 1; }
 
-        .img-box { 
-            width: 100%; height: var(--altura-imagen);
-            background: #ffffff; display: flex; align-items: center;
-            justify-content: center; padding: 15px; box-sizing: border-box;
-            border-bottom: 1px solid #eee; cursor: zoom-in;
-        }
-        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .product-card h3 { font-size: 0.85em; color: #007185; height: 38px; overflow: hidden; margin: 10px 0; }
+        .price { color: #B12704; font-size: 1.3em; font-weight: bold; margin-bottom: 12px; }
+        .btn-add { background: #ffd814; border: 1px solid #fcd200; border-radius: 20px; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; }
 
-        .card.oferta-especial { border: 3px solid var(--oferta); }
-        .badge-oferta { position: absolute; top: 10px; right: 10px; background: var(--oferta); color: white; padding: 5px 15px; border-radius: 50px; font-size: 0.8em; font-weight: bold; z-index: 10; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        /* MODAL VISOR */
+        #imageModal, #checkoutModal { display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        .modal-box { position: relative; width: 90%; max-width: 500px; text-align: center; }
+        #imgFull { max-width: 100%; max-height: 70vh; border-radius: 10px; border: 3px solid white; }
+        .nav-btn { position: absolute; top: 50%; background: white; border: none; padding: 10px; cursor: pointer; border-radius: 50%; font-weight: bold; }
+        .prev { left: -50px; } .next { right: -50px; }
 
-        .card-info { padding: 15px; text-align: center; flex-grow: 1; }
-        .card-info h3 { margin: 0; color: var(--primary); font-size: 1.1em; }
-        .card-info p { font-size: 0.85em; color: #666; margin-top: 5px; }
+        .form-card { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; }
+        .form-card input, .form-card textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        
+        #cart-btn { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--amazon-orange); padding: 18px; border-radius: 50px; text-align: center; font-weight: bold; display: none; z-index: 2000; width: 85%; max-width: 400px; text-decoration: none; color: #131921; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-        .btn-add { background: var(--dark); color: white; border: none; padding: 12px; width: 85%; margin: 0 auto 15px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-add:hover { background: var(--primary); transform: scale(1.05); }
-
-        .info-section { background: white; border-radius: 30px; padding: 30px; margin-top: 50px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .map-container { border-radius: 20px; overflow: hidden; height: 350px; border: 4px solid #f4f7f6; }
-
-        #zoomModal { display: none; position: fixed; z-index: 5000; padding-top: 50px; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); text-align: center; }
-        #zoomModal img { max-width: 90%; max-height: 80%; border-radius: 10px; margin-top: 20px; }
-        .close-zoom { position: absolute; top: 20px; right: 35px; color: white; font-size: 40px; cursor: pointer; }
-
-        #cart-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 500px; background: var(--dark); color: white; padding: 15px 25px; border-radius: 50px; display: none; z-index: 2000; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-        .btn-wp { background: var(--success); color: white; padding: 10px 20px; border-radius: 50px; text-decoration: none; font-weight: bold; }
+        @media (max-width: 600px) { .header-content { flex-direction: column; } .prev { left: 0; } .next { right: 0; } }
     </style>
 </head>
 <body>
 
-<div class="promo-bar">🚚 ENVÍO A DOMICILIO SIN COSTO EXTRA EN HUAUTLA 📦</div>
-
 <header>
-    <h1>MINI SURTIDITO</h1>
-    <p>Tecnología y Accesorios</p>
+    <div class="header-content">
+        <div class="brand">
+            <img src="huautla.jpg" alt="Logo" class="img-huautla">
+            <a href="#" class="logo-text">Mini Surtidito</a>
+        </div>
+        <div class="search-container">
+            <div class="search-bar">
+                <input type="text" id="busqueda" onkeyup="buscar()" placeholder="¿Qué estás buscando u ocupas en Huautla?">
+            </div>
+        </div>
+    </div>
 </header>
 
-<div class="search-container">
-    <div class="search-box">
-        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="🔍 Busca bocinas, audífonos, memorias...">
+<div class="info-bar">📍 Av. de los Constituyentes #100, Col. Centro, Huautla de Jiménez, Oax.</div>
+<div class="delivery-banner">🚀 ¡ENTREGA A DOMICILIO SIN COSTO EXTRA EN TODO HUAUTLA!</div>
+
+<div id="imageModal">
+    <div class="modal-box">
+        <button class="nav-btn prev" onclick="cambiarImagen(-1)">❮</button>
+        <img id="imgFull">
+        <button class="nav-btn next" onclick="cambiarImagen(1)">❯</button>
+        <p style="color:white; margin-top:10px;">Toca afuera para cerrar</p>
+    </div>
+</div>
+
+<div id="checkoutModal">
+    <div class="form-card">
+        <h2 style="margin-top:0">🏠 Datos de Entrega</h2>
+        <input type="text" id="nom" placeholder="Tu nombre">
+        <textarea id="dir" rows="3" placeholder="Tu dirección exacta en Huautla"></textarea>
+        <button class="btn-add" style="background:var(--amazon-orange)" onclick="enviar()">PEDIR POR WHATSAPP 📱</button>
+        <button onclick="document.getElementById('checkoutModal').style.display='none'" style="border:none; background:none; color:blue; width:100%; margin-top:10px; cursor:pointer;">Regresar</button>
     </div>
 </div>
 
 <div class="container">
-    <div class="delivery-highlight">
-        <div style="font-size: 30px;">🏠</div>
-        <div class="delivery-text">
-            <h4>¿Quieres verlo antes de comprar?</h4>
-            <p>Pídelo por WhatsApp y <b>lo llevamos a tu domicilio para mostrártelo sin compromiso.</b></p>
-        </div>
-    </div>
-
-    <h2 class="section-title">🔥 Ofertas del Mes 🔥</h2>
-    <div class="grid">
-        <div class="card oferta-especial" data-name="audinos de diadema wireless headphones p47">
-            <div class="badge-oferta">OFERTA</div>
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://i.ebayimg.com/images/g/ChIAAeSw-Ixo45lW/s-l960.webp"></div>
-            <div class="card-info">
-                <h3>Audífonos P47</h3>
-                <p>Antes: <del>$250</del><br><b style="color:var(--oferta); font-size: 1.2em;">Hoy: $100.00</b></p>
-            </div>
-            <button class="btn-add" onclick="add('OFERTA: Audífonos P47 ($100)')">Añadir al Carrito</button>
-        </div>
-
-        <div class="card oferta-especial" data-name="oferta electronica bocina chica link bits">
-            <div class="badge-oferta">OFERTA</div>
-            <div class="img-box" onclick="zoomImg(this)"><img src="bocina oferta.png"></div>
-            <div class="card-info">
-                <h3>Bocina Link Bits 3"</h3>
-                <p>Antes: <del>$200</del><br><b style="color:var(--oferta); font-size: 1.2em;">Hoy: $120.00</b></p>
-            </div>
-            <button class="btn-add" onclick="add('OFERTA: Bocina Link Bits ($120)')">Añadir al Carrito</button>
-        </div>
-    </div>
-
-    <h2 class="section-title">Todos los Productos</h2>
-    <div class="grid">
-        <div class="card" data-name="electronica bocina link bits 3 pulgadas naranja">
-            <div class="img-box" onclick="zoomImg(this)"><img src="bocina-naranja.png"></div>
-            <div class="card-info"><h3>Bocina Naranja 3"</h3><p>Precio: $150.00</p></div>
-            <button class="btn-add" onclick="add('Bocina Naranja ($150)')">Añadir</button>
-        </div>
-        
-        <div class="card" data-name="electronica bocina azul link bits 6 pulgadas">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp"></div>
-            <div class="card-info"><h3>Bocina Link Bits 6"</h3><p>Precio: $300.00</p></div>
-            <button class="btn-add" onclick="add('Bocina Azul 6p ($300)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica memoria usb kingston 64gb">
-            <div class="img-box" onclick="zoomImg(this)"><img src="64.png"></div>
-            <div class="card-info"><h3>USB Kingston 64GB</h3><p>Precio: $250.00</p></div>
-            <button class="btn-add" onclick="add('USB 64GB ($250)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica audifonos in Pods 12">
-            <div class="img-box" onclick="zoomImg(this)"><img src="12.png"></div>
-            <div class="card-info"><h3>Audífonos InPods 12</h3><p>Precio: $110.00</p></div>
-            <button class="btn-add" onclick="add('inpods 12 ($110)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica audifonos samsung con power bank">
-            <div class="img-box" onclick="zoomImg(this)"><img src="samsung.png"></div>
-            <div class="card-info"><h3>Samsung TWS + Power Bank</h3><p>Precio: $300.00</p></div>
-            <button class="btn-add" onclick="add('Samsung TWS PowerBank ($300)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica bocina con lampara y carga solar">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp"></div>
-            <div class="card-info"><h3>Bocina Lámpara Solar</h3><p>Precio: $300.00</p></div>
-            <button class="btn-add" onclick="add('Bocina Solar ($300)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica mini lampara de escritorio con forma de conejo, color azul">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp"></div>
-            <div class="card-info"><h3>Mini Lámpara Conejo</h3><p>Precio: $130.00</p></div>
-            <button class="btn-add" onclick="add('Lámpara Conejo ($130)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica termo, color negro y azul">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp"></div>
-            <div class="card-info"><h3>Termo Negro/Azul</h3><p>Precio: $90.00</p></div>
-            <button class="btn-add" onclick="add('Termo ($90)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica rasuradora portatil, recargable">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp"></div>
-            <div class="card-info"><h3>Rasuradora Portátil</h3><p>Precio: $90.00</p></div>
-            <button class="btn-add" onclick="add('Rasuradora ($90)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica reloj de kuromi mini">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif"></div>
-            <div class="card-info"><h3>Reloj Kuromi Mini</h3><p>Precio: $70.00</p></div>
-            <button class="btn-add" onclick="add('Reloj Kuromi ($70)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica audifonos de diadema color azul,con bluetooth,memoria sd y auxiliares">
-            <div class="img-box" onclick="zoomImg(this)"><img src="diadema azul cielo.png"></div>
-            <div class="card-info"><h3>Audífonos Azul Cielo</h3><p>Precio: $120.00</p></div>
-            <button class="btn-add" onclick="add('Diadema Azul Cielo ($120)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica audifonos de diadema de oreja,con bluetooth,memoria sd y auxiliares">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_2X_710150-MLM96364257947_102025-F.webp"></div>
-            <div class="card-info"><h3>Audífonos Azul Marino</h3><p>Precio: $120.00</p></div>
-            <button class="btn-add" onclick="add('Diadema Azul Marino ($120)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica audifonos marca hora">
-            <div class="img-box" onclick="zoomImg(this)"><img src="audifono hora.png"></div>
-            <div class="card-info"><h3>Audífonos MARCA HORA</h3><p>Precio: $90.00</p></div>
-            <button class="btn-add" onclick="add('Audífonos HORA ($90)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica cargador v8, marca hora">
-            <div class="img-box" onclick="zoomImg(this)"><img src="v8.png"></div>
-            <div class="card-info"><h3>Cargador V8,MARCA HORA</h3><p>Precio: $100.00</p></div>
-            <button class="btn-add" onclick="add('Cargador V8 ($100)')">Añadir</button>
-        </div>
-
-        <div class="card" data-name="electronica cargador de c a c, marca hora">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp"></div>
-            <div class="card-info"><h3>Cargador C a C, MARCA HORA</h3><p>Precio: $150.00</p></div>
-            <button class="btn-add" onclick="add('Cargador C a C ($150)')">Añadir</button>
-        </div>
-
- <div class="card" data-name="electronica cargador tipo c, marca hora">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811"></div>
-            <div class="card-info"><h3>Cargador tipo C, MARCA HORA</h3><p>Precio: $100.00</p></div>
-            <button class="btn-add" onclick="add('Cargador tipo C($100)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica VENTA DE CHIT BAIT">
-            <div class="img-box" onclick="zoomImg(this)"><img src="bait.png"></div>
-            <div class="card-info"><h3>Venta de chip BAIT,Con $100 DE SALDO</h3><p>Precio: $80.00</p></div>
-            <button class="btn-add" onclick="add('CHIP BAIT($80)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica VENTA DE CHIP telcel">
-            <div class="img-box" onclick="zoomImg(this)"><img src="telcel.png"></div>
-            <div class="card-info"><h3>Venta de chiP telcel</h3><p>Precio: $50.00</p></div>
-            <button class="btn-add" onclick="add('CHIP TELCEL($50)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica TIMBRE INALAMBRICO">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp"></div>
-            <div class="card-info"><h3>TIMBRE INALAMBRICO</h3><p>Precio: $150.00</p></div>
-            <button class="btn-add" onclick="add('TIMBRE INALAMBRICO($150)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica TIMBRE con SENSOR de movimiento">
-            <div class="img-box" onclick="zoomImg(this)"><img src="sensor.png"></div>
-            <div class="card-info"><h3>TIMBRE con SENSOR de movimiento</h3><p>Precio: $150.00</p></div>
-            <button class="btn-add" onclick="add('TIMBRE con SENSOR de movimiento($150)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica SOPORTE PARA CELULAR EN MOTO">
-            <div class="img-box" onclick="zoomImg(this)"><img src="soporte celular.png"></div>
-            <div class="card-info"><h3>SOPORTE PARA CELULAR EN MOTO</h3><p>Precio: $150.00</p></div>
-            <button class="btn-add" onclick="add('SOPORTE PARA CELULAR EN MOTO($150)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica LUZ LED PARA BICICLETA">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp"></div>
-            <div class="card-info"><h3>LUZ LED PARA BICICLETA</h3><p>Precio: $90.00</p></div>
-            <button class="btn-add" onclick="add('LUZ LED PARA BICICLETA($90)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica AUDIFONOS SONY">
-            <div class="img-box" onclick="zoomImg(this)"><img src="sony.png"></div>
-            <div class="card-info"><h3>AUDIFONOS SONY, DIADEMA</h3><p>Precio: $350.00</p></div>
-            <button class="btn-add" onclick="add('AUDIFONOS SONY($350)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica LAMPARA TACTICA,BUENA ILUMINACION,RECARGABLE">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp"></div>
-            <div class="card-info"><h3>LAMPARA TACTICA,BUENA ILUMINACION,RECARGABLE</h3><p>Precio: $150.00</p></div>
-            <button class="btn-add" onclick="add('LAMPARA TACTICA,BUENA ILUMINACION,RECARGABLE($150)')">Añadir</button>
-        </div>
-
-<div class="card" data-name="electronica CARGADOR DE CONTROL XBOX 360">
-            <div class="img-box" onclick="zoomImg(this)"><img src="https://http2.mlstatic.com/D_NQ_NP_2X_966217-MLM90133406251_082025-F-10x-kit-carga-y-juega-cable-cargador-pila-para-xbox-360.webp"></div>
-            <div class="card-info"><h3>CARGADOR DE CONTROL XBOX 360</h3><p>Precio: $180.00</p></div>
-            <button class="btn-add" onclick="add('CARGADOR DE CONTROL XBOX 360($180)')">Añadir</button>
-        </div>
-
-    </div> <div class="info-section">
-        <div class="details">
-            <h2>📍 Ubicación</h2>
-            <p>Av. de los Constituyentes #100, Huautla de Jiménez.</p>
-            <p><b>WhatsApp:</b> 236 123 1236</p>
-            <a href="#" target="_blank" style="background:var(--info); color:white; padding:10px 20px; border-radius:50px; text-decoration:none; display:inline-block; font-weight:bold; margin-top:10px;">Ver Mapa</a>
-        </div>
-        <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3774.2!2d-96.8415!3d18.1341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDA4JzAyLjgiTiA5Niw0OCcyOS40Ilc!5e0!3m2!1ses!2smx!4v1620000000000!5m2!1ses!2smx" width="100%" height="100%" style="border:0;" allowfullscreen=""></iframe>
-        </div>
-    </div>
+    <div class="product-grid" id="grid"></div>
 </div>
 
-<div id="zoomModal">
-    <span class="close-zoom" onclick="closeZoom()">×</span>
-    <img id="imgAmpliada">
-</div>
-
-<div id="cart-bar">
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span>🛒 <b id="cart-count">0</b> productos</span>
-        <a href="#" class="btn-wp" onclick="send()">PEDIR A DOMICILIO</a>
-    </div>
-</div>
+<a href="javascript:void(0)" id="cart-btn" onclick="document.getElementById('checkoutModal').style.display='flex'">
+    🛒 FINALIZAR MI PEDIDO (<span id="total">0</span>)
+</a>
 
 <script>
-    let cart = [];
-    const WHATSAPP = "522361231236"; 
+    const productos = [
+        { n: "Reloj Digital Kuromi", p: 70, i: ["https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif", "https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif", "https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif"] },
+        { n: "Rasuradora Recargable", p: 90, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp"] },
+        { n: "Lámpara Táctica P50", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp", "https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp", "https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp"] },
+        { n: "Soporte Celular Moto", p: 150, i: ["soporte celular.png", "soporte celular.png", "soporte celular.png"] },
+        { n: "Audífonos SONY Diadema", p: 350, i: ["sony.png", "sony.png", "sony.png"] },
+        { n: "Termo Negro/Azul", p: 90, i: ["https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp", "https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp", "https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp"] },
+        { n: "Cargador Xbox 360", p: 180, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_966217-MLM90133406251_082025-F-10x-kit-carga-y-juega-cable-cargador-pila-para-xbox-360.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_966217-MLM90133406251_082025-F-10x-kit-carga-y-juega-cable-cargador-pila-para-xbox-360.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_966217-MLM90133406251_082025-F-10x-kit-carga-y-juega-cable-cargador-pila-para-xbox-360.webp"] },
+        { n: "Mini Lámpara Conejo", p: 130, i: ["https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp"] },
+        { n: "Luz LED Bicicleta", p: 90, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp"] },
+        { n: "Audífonos P47 Wireless", p: 100, i: ["https://i.ebayimg.com/images/g/ChIAAeSw-Ixo45lW/s-l960.webp", "https://i.ebayimg.com/images/g/ChIAAeSw-Ixo45lW/s-l960.webp", "https://i.ebayimg.com/images/g/ChIAAeSw-Ixo45lW/s-l960.webp"] },
+        { n: "Bocina Link Bits 3\"", p: 120, i: ["bocina oferta.png", "bocina oferta.png", "bocina oferta.png"] },
+        { n: "Bocina Naranja 3\"", p: 150, i: ["bocina-naranja.png", "bocina-naranja.png", "bocina-naranja.png"] },
+        { n: "Bocina Link Bits 6\"", p: 300, i: ["https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp"] },
+        { n: "USB Kingston 64GB", p: 250, i: ["64.png", "64.png", "64.png"] },
+        { n: "Audífonos InPods 12", p: 110, i: ["12.png", "12.png", "12.png"] },
+        { n: "Samsung TWS + Powerbank", p: 300, i: ["samsung.png", "samsung.png", "samsung.png"] },
+        { n: "Bocina Solar Lámpara", p: 300, i: ["https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp"] },
+        { n: "Diadema Azul Cielo", p: 120, i: ["diadema azul cielo.png", "diadema azul cielo.png", "diadema azul cielo.png"] },
+        { n: "Diadema Azul Marino", p: 120, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_710150-MLM96364257947_102025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_710150-MLM96364257947_102025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_710150-MLM96364257947_102025-F.webp"] },
+        { n: "Audífonos Marca HORA", p: 90, i: ["audifono hora.png", "audifono hora.png", "audifono hora.png"] },
+        { n: "Cargador V8 HORA", p: 100, i: ["v8.png", "v8.png", "v8.png"] },
+        { n: "Cargador C a C HORA", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp"] },
+        { n: "Cargador Tipo C HORA", p: 100, i: ["https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811", "https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811", "https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811"] },
+        { n: "Chip BAIT + Saldo", p: 80, i: ["bait.png", "bait.png", "bait.png"] },
+        { n: "Chip Telcel", p: 50, i: ["telcel.png", "telcel.png", "telcel.png"] },
+{ n: "lampara led", p: 50, i: ["led.png", "led1.png", "led2.jpeg"] },
 
-    function zoomImg(elemento) {
-        document.getElementById("imgAmpliada").src = elemento.querySelector("img").src;
-        document.getElementById("zoomModal").style.display = "block";
-    }
-    function closeZoom() { document.getElementById("zoomModal").style.display = "none"; }
-    window.onclick = function(e) { if (e.target == document.getElementById("zoomModal")) closeZoom(); }
+        { n: "Timbre Inalámbrico", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp", "https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp", "https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp"] },
+        { n: "Timbre con Sensor", p: 150, i: ["sensor.png", "sensor.png", "sensor.png"] }
+    ];
 
-    function add(item) { 
-        cart.push(item); 
-        document.getElementById('cart-bar').style.display = 'block'; 
-        document.getElementById('cart-count').innerText = cart.length; 
+    let carrito = [];
+    let imgsActuales = [];
+    let idxImg = 0;
+
+    function render(data) {
+        const grid = document.getElementById('grid');
+        grid.innerHTML = "";
+        data.forEach(p => {
+            const fotos = p.i.map((img, i) => `<img src="${img}" class="${i===0?'active':''}" data-idx="${i}">`).join('');
+            grid.innerHTML += `
+                <div class="product-card">
+                    <div class="img-container" onclick='abrirVisor(${JSON.stringify(p.i)})'>${fotos}</div>
+                    <h3>${p.n}</h3>
+                    <div class="price">$${p.p}.00</div>
+                    <button class="btn-add" onclick="agregar('${p.n} ($${p.p})')">Añadir al pedido</button>
+                </div>`;
+        });
     }
 
-    function filterProducts() {
-        let input = document.getElementById('searchInput').value.toLowerCase();
-        let cards = document.getElementsByClassName('card');
-        for (let i = 0; i < cards.length; i++) {
-            let name = cards[i].getAttribute('data-name') || "";
-            cards[i].style.display = name.includes(input) ? "flex" : "none";
-        }
+    // Cambia fotos automáticamente en la cuadrícula
+    setInterval(() => {
+        document.querySelectorAll('.img-container').forEach(c => {
+            const imgs = c.querySelectorAll('img');
+            const active = c.querySelector('img.active');
+            let next = (parseInt(active.dataset.idx) + 1) % imgs.length;
+            active.classList.remove('active');
+            imgs[next].classList.add('active');
+        });
+    }, 3000);
+
+    function abrirVisor(fotos) {
+        imgsActuales = fotos; idxImg = 0;
+        document.getElementById('imgFull').src = imgsActuales[0];
+        document.getElementById('imageModal').style.display = 'flex';
     }
 
-    function send() {
-        if(cart.length === 0) return;
-        const msg = encodeURIComponent("¡Hola! Me interesan estos productos para verlos en mi domicilio sin compromiso:\n\n" + cart.join('\n'));
-        window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank');
+    function cambiarImagen(d) {
+        idxImg = (idxImg + d + imgsActuales.length) % imgsActuales.length;
+        document.getElementById('imgFull').src = imgsActuales[idxImg];
     }
+
+    document.getElementById('imageModal').onclick = function(e) {
+        if(e.target == this) this.style.display = 'none';
+    };
+
+    function agregar(item) {
+        carrito.push(item);
+        document.getElementById('cart-btn').style.display = 'block';
+        document.getElementById('total').innerText = carrito.length;
+    }
+
+    function buscar() {
+        const t = document.getElementById('busqueda').value.toLowerCase();
+        render(productos.filter(p => p.n.toLowerCase().includes(t)));
+    }
+
+    function enviar() {
+        const n = document.getElementById('nom').value;
+        const d = document.getElementById('dir').value;
+        if(!n || !d) return alert("Faltan datos");
+        const msg = encodeURIComponent(`🛒 *PEDIDO MINI SURTIDITO*\n👤 ${n}\n📍 ${d}\n📦 ${carrito.join("\n")}`);
+        window.open("https://wa.me/522361231236?text=" + msg);
+    }
+
+    render(productos);
 </script>
-
 </body>
-</html>    
+</html>

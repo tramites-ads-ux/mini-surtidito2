@@ -11,6 +11,8 @@
             --amazon-orange: #febd69;
             --bg-gray: #eaeded;
             --success-green: #067D62;
+            --danger-red: #cc0c39;
+            --offer-yellow: #ffd814;
         }
 
         body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--bg-gray); padding-bottom: 120px; }
@@ -27,34 +29,45 @@
         .info-bar { background: #232f3e; color: white; text-align: center; padding: 8px; font-size: 0.85em; }
         .delivery-banner { background: var(--success-green); color: white; text-align: center; padding: 12px; font-weight: bold; }
 
+        /* SECCIÓN ESPECIAL DE OFERTA */
+        .featured-offer { 
+            background: linear-gradient(135deg, #fff 60%, var(--offer-yellow) 100%);
+            max-width: 1300px; margin: 20px auto; padding: 20px; border-radius: 12px;
+            border: 3px dashed var(--danger-red); display: flex; align-items: center; gap: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .featured-img { width: 150px; height: 150px; object-fit: contain; background: white; border-radius: 8px; cursor: zoom-in; }
+        .featured-info { flex-grow: 1; }
+        .featured-info h2 { margin: 0; color: var(--danger-red); font-size: 1.4em; }
+        .featured-info p { margin: 5px 0; color: #444; }
+        .featured-price { font-size: 1.8em; font-weight: bold; color: #B12704; }
+        .old-price { text-decoration: line-through; color: #767676; font-size: 0.6em; margin-right: 10px; }
+
         .container { max-width: 1300px; margin: 30px auto; padding: 0 15px; }
-
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
-        .product-card { background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; text-align: center; transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        
-        /* Contenedor de imagen animada */
-        .img-container { height: 160px; position: relative; overflow: hidden; cursor: zoom-in; margin-bottom: 10px; background: #fff; }
-        .img-container img { height: 100%; width: 100%; object-fit: contain; position: absolute; left: 0; top: 0; opacity: 0; transition: opacity 0.8s; }
-        .img-container img.active { opacity: 1; }
-
-        .product-card h3 { font-size: 0.85em; color: #007185; height: 38px; overflow: hidden; margin: 10px 0; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; text-align: center; display: flex; flex-direction: column; justify-content: space-between; transition: 0.3s; position: relative; }
+        .img-container { height: 160px; position: relative; cursor: zoom-in; margin-bottom: 10px; background: #fff; display: flex; align-items: center; justify-content: center; }
+        .img-container img { max-height: 100%; max-width: 100%; object-fit: contain; }
+        .product-card h3 { font-size: 0.85em; color: #007185; height: 40px; overflow: hidden; margin: 10px 0; }
         .price { color: #B12704; font-size: 1.3em; font-weight: bold; margin-bottom: 12px; }
-        .btn-add { background: #ffd814; border: 1px solid #fcd200; border-radius: 20px; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-add { background: var(--offer-yellow); border: 1px solid #fcd200; border-radius: 20px; padding: 10px; cursor: pointer; font-weight: bold; width: 100%; }
 
-        /* MODAL VISOR */
-        #imageModal, #checkoutModal { display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
-        .modal-box { position: relative; width: 90%; max-width: 500px; text-align: center; }
-        #imgFull { max-width: 100%; max-height: 70vh; border-radius: 10px; border: 3px solid white; }
-        .nav-btn { position: absolute; top: 50%; background: white; border: none; padding: 10px; cursor: pointer; border-radius: 50%; font-weight: bold; }
-        .prev { left: -50px; } .next { right: -50px; }
-
-        .form-card { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; }
-        .form-card input, .form-card textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        
+        /* MODALES */
+        #imageModal, #checkoutModal, #cartModal { display: none; position: fixed; z-index: 5000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
+        .modal-box { position: relative; width: 95%; max-width: 500px; text-align: center; }
+        #imgFull { max-width: 100%; max-height: 75vh; border-radius: 10px; border: 3px solid white; background: white; }
+        .form-card { background: white; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 0.9em; text-align: left; }
+        .btn-remove { background: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8em; font-weight: bold; }
         #cart-btn { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: var(--amazon-orange); padding: 18px; border-radius: 50px; text-align: center; font-weight: bold; display: none; z-index: 2000; width: 85%; max-width: 400px; text-decoration: none; color: #131921; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
-        @media (max-width: 600px) { .header-content { flex-direction: column; } .prev { left: 0; } .next { right: 0; } }
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: white; border: none; padding: 15px; cursor: pointer; border-radius: 50%; font-weight: bold; z-index: 6000; }
+        .prev { left: -25px; } .next { right: -25px; }
+
+        @media (max-width: 600px) { 
+            .featured-offer { flex-direction: column; text-align: center; margin: 15px; }
+            .header-content { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -67,7 +80,7 @@
         </div>
         <div class="search-container">
             <div class="search-bar">
-                <input type="text" id="busqueda" onkeyup="buscar()" placeholder="¿Qué estás buscando u ocupas en Huautla?">
+                <input type="text" id="busqueda" onkeyup="buscar()" placeholder="¿Qué buscas en Huautla?">
             </div>
         </div>
     </div>
@@ -76,22 +89,44 @@
 <div class="info-bar">📍 Av. de los Constituyentes #100, Col. Centro, Huautla de Jiménez, Oax.</div>
 <div class="delivery-banner">🚀 ¡ENTREGA A DOMICILIO SIN COSTO EXTRA EN TODO HUAUTLA!</div>
 
+<div class="featured-offer" id="ofertaEspecial">
+    <img src="samsung.png"] },
+" class="featured-img" onclick="abrirVisor(['samsung2.png'])" alt="Oferta">
+    <div class="featured-info">
+        <span style="background:var(--danger-red); color:white; padding:2px 8px; border-radius:4px; font-size:0.8em; font-weight:bold;">OFERTA RELÁMPAGO ⚡</span>
+        <h2>Audífonos SAMSUNG</h2>
+        <p>Sonido envolvente, Y luces RGB. ¡Solo hoy!</p>
+        <div class="featured-price"><span class="old-price">$350</span>$200.00</div>
+    </div>
+    <button class="btn-add" style="width:auto; padding:15px 30px;" onclick="agregar('Audífonos SAMSUNG(OFERTA)', 200)">¡LO QUIERO!</button>
+</div>
+
 <div id="imageModal">
     <div class="modal-box">
         <button class="nav-btn prev" onclick="cambiarImagen(-1)">❮</button>
         <img id="imgFull">
         <button class="nav-btn next" onclick="cambiarImagen(1)">❯</button>
-        <p style="color:white; margin-top:10px;">Toca afuera para cerrar</p>
+    </div>
+</div>
+
+<div id="cartModal">
+    <div class="form-card">
+        <h2 style="margin-top:0">🛒 Mi Pedido</h2>
+        <div id="lista-carrito-detalles"></div>
+        <div id="total-pago" style="margin-top:15px; font-weight:bold; font-size:1.2em; text-align:right; color: #B12704;"></div>
+        <hr>
+        <button class="btn-add" style="background:var(--amazon-orange); margin-top:10px;" onclick="abrirCheckout()">Siguiente: Datos de Envío</button>
+        <button onclick="cerrarModales()" style="border:none; background:none; color:gray; width:100%; margin-top:10px; cursor:pointer;">Seguir viendo</button>
     </div>
 </div>
 
 <div id="checkoutModal">
     <div class="form-card">
         <h2 style="margin-top:0">🏠 Datos de Entrega</h2>
-        <input type="text" id="nom" placeholder="Tu nombre">
-        <textarea id="dir" rows="3" placeholder="Tu dirección exacta en Huautla"></textarea>
-        <button class="btn-add" style="background:var(--amazon-orange)" onclick="enviar()">PEDIR POR WHATSAPP 📱</button>
-        <button onclick="document.getElementById('checkoutModal').style.display='none'" style="border:none; background:none; color:blue; width:100%; margin-top:10px; cursor:pointer;">Regresar</button>
+        <input type="text" id="nom" placeholder="Tu nombre completo">
+        <textarea id="dir" rows="3" placeholder="Dirección exacta en Huautla"></textarea>
+        <button class="btn-add" style="background:var(--success-green); color:white;" onclick="enviar()">CONFIRMAR POR WHATSAPP 📱</button>
+        <button onclick="regresarAlCarrito()" style="border:none; background:none; color:blue; width:100%; margin-top:10px; cursor:pointer;">Volver al carrito</button>
     </div>
 </div>
 
@@ -99,57 +134,60 @@
     <div class="product-grid" id="grid"></div>
 </div>
 
-<a href="javascript:void(0)" id="cart-btn" onclick="document.getElementById('checkoutModal').style.display='flex'">
-    🛒 FINALIZAR MI PEDIDO (<span id="total">0</span>)
+<a href="javascript:void(0)" id="cart-btn" onclick="abrirCarrito()">
+    🛒 VER MI PEDIDO (<span id="total">0</span>)
 </a>
 
 <script>
     const productos = [
-        { n: "Reloj Digital Kuromi", p: 70, i: ["https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif", "https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif", "https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif"] },
-        { n: "Rasuradora Recargable", p: 90, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp"] },
-        { n: "Lámpara Táctica P50", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp", "https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp", "https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp"] },
-        { n: "Soporte Celular Moto", p: 150, i: ["soporte celular.png", "soporte celular.png", "soporte celular.png"] },
-        { n: "Audífonos SONY Diadema", p: 350, i: ["sony.png", "sony.png", "sony.png"] },
-        { n: "Termo Negro/Azul", p: 90, i: ["https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp", "https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp", "https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp"] },
-         { n: "Mini Lámpara Conejo", p: 130, i: ["https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp"] },
-        { n: "Luz LED Bicicleta", p: 90, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp"] },
-        { n: "VENDIDO", p: 100, i: ["https://i.ebayimg.com/images/g/ChIAAeSw-Ixo45lW/s-l960.webp", "https://i.ebayimg.com/images/g/ChIAAeSw-Ixo45lW/s-l960.webp", "https://i.ebayimg.com/images/g/ChIAAeSw-Ixo45lW/s-l960.webp"] },
-        { n: "Bocina Link Bits 3\"", p: 120, i: ["bocina oferta.png", "bocina oferta.png", "bocina oferta.png"] },
-{ n: "bocina MARCA HORA, CILINDRO\"", p: 250, i: ["HORA1.jpeg","cilindro.jpeg", "cilindro2.jpeg", "cilindro3.jpeg", "cilindro4.jpeg", "cilindro5.jpeg"] },
-{ n: "BOCINA rectangunlar,HORA,\"", p: 250, i: ["RECTANGULO1.jpg", "bocinahora.jpeg", "bocinahora2.jpeg", "bocinahora3.jpeg"] },
-{ n: "AUDIFONO INALAMBRICO,HORA,\"", p: 200, i: ["audifono hora.jpg", "audifonohora.jpeg", "audifonohora2.jpeg"] },
-{ n: "AUDIFONO samsung y sony,\"", p: 50, i: ["audifono.jpeg", "audifono2.jpeg", "audifono3.jpeg"] },
-{ n: "SOPORTE para tv,\"", p: 120, i: ["soporte.jpeg", "soporte2.jpeg",] },
-{ n: "AUDIFONO SONY Y SAMSUNG,\"", p: 120, i: ["SAMSUNG3.jpeg", "SONY.jpeg", "SONY2.jpeg"] },
-{ n: "BOCINA con microfono,\"", p: 220, i: ["MICRO1.jpg", "microfono.jpeg", "microfono2.jpeg"] },
-{ n: "MINI bocina,\"", p: 120, i: ["bocinachica.jpeg", "chica2.jpeg",] },
-{ n: "MINI bocina, cilindro,\"", p: 120, i: ["azul.jpeg", "azul2.jpeg",] },
-{ n: "BOCINA con RADIO,\"", p: 150, i: ["radio1.jpeg", "radio2.jpeg",] },
-{ n: "MINI bocina, con luz led,\"", p: 110, i: ["1.jpeg", "2.jpeg",] },
-{ n: "BOCINA GRANDE, CON LUZ,\"", p: 450, i: ["5.jpeg", "6.jpeg",] },
-{ n: "BOCINA GRANDE, CON LUZ,\"", p: 450, i: ["7.jpeg", "8.jpeg",] },
-{ n: "USB 32 GB, KINGSTON,\"", p: 150, i: ["USB.jpg", "USB2.jpeg", "USB3.jpeg"] },
+        { n: "bocina MARCA HORA, CILINDRO", p: 250, i: ["HORA1.jpeg","cilindro.jpeg", "cilindro2.jpeg", "cilindro3.jpeg", "cilindro4.jpeg", "cilindro5.jpeg"] },
+        { n: "BOCINA rectangular HORA", p: 250, i: ["RECTANGULO1.jpg", "bocinahora.jpeg", "bocinahora2.jpeg", "bocinahora3.jpeg"] },
+         { n: "AUDIFONOS DIADEMA LINK BITS", p: 200, i: ["link.png", "link2.png", "link3.png"] },
 
-
-
-
-{ n: "cargador V8,MARCA HORA,\"", p: 50, i: ["v8.png", "v81.jpeg", ] },
- { n: "Bocina Naranja 3\"", p: 150, i: ["bocina-naranja.png", "bocina-naranja.png", "bocina-naranja.png"] },
-        { n: "Bocina Link Bits 6\"", p: 300, i: ["https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp", "https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp"] },
-        { n: "USB Kingston 64GB", p: 250, i: ["64.png", "64.png", "64.png"] },
-        { n: "Audífonos InPods 12", p: 110, i: ["12.png", "12.png", "12.png"] },
-        { n: "Samsung TWS + Powerbank", p: 300, i: ["samsung.png", "samsung.png", "samsung.png"] },
-        { n: "Bocina Solar Lámpara", p: 300, i: ["https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp", "https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp"] },
-        { n: "VENDIDO", p: 120, i: ["diadema azul cielo.png", "diadema azul cielo.png", "diadema azul cielo.png"] },
-        { n: "Audífonos Marca HORA", p: 90, i: ["audifono hora.png", "audifono hora.png", "audifono hora.png"] },
-                { n: "Cargador C a C HORA", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp", "https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp"] },
-        { n: "Cargador Tipo C HORA", p: 100, i: ["https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811", "https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811", "https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811"] },
-        { n: "Chip BAIT + Saldo", p: 80, i: ["bait.png", "bait.png", "bait.png"] },
-        { n: "Chip Telcel", p: 50, i: ["telcel.png", "telcel.png", "telcel.png"] },
-{ n: "lampara led", p: 50, i: ["led.png", "led1.png", "led2.jpeg"] },
-
-        { n: "Timbre Inalámbrico", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp", "https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp", "https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp"] },
-        { n: "Timbre con Sensor", p: 150, i: ["sensor.png", "sensor.png", "sensor.png"] }
+        { n: "SOPORTE DE TV, movible", p: 280, i: ["soporte.png", "soporte2.png", "soporte3.png"] },
+        { n: "AUDIFONOS DE DIADEMA, DE GATO", p: 150, i: ["azul.png", "azul3.jpeg", "azul4.jpeg"] },
+        { n: "AUDIFONOS DE DIADEMA, DE GATO", p: 150, i: ["rosa.png", "rosa2.jpeg", "rosa3.jpeg"] },
+        { n: "PILA PORTATIL, HORA", p: 250, i: ["pila.png", "pila2.png", "pila3.png"] },
+        { n: "convertidor a SMART TV", p: 550, i: ["tv.png", "tv2.png", "tv3.png"] },
+        { n: "Reloj Digital Kuromi", p: 70, i: ["https://ae-pic-a1.aliexpress-media.com/kf/Sfbf5b63328be40768196fe1059101ae57.jpg_640x640q75.jpg_.avif"] },
+        { n: "Rasuradora Recargable", p: 90, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_659678-MLM97460602227_112025-F.webp"] },
+        { n: "Lámpara Táctica P50", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_949921-MLM80373882847_112024-O-lampara-tactica-ultra-potente-recargable-p50-15000-lumenes.webp"] },
+        { n: "Soporte Celular Moto", p: 150, i: ["soporte celular.png"] },
+        { n: "Audífonos SONY Diadema", p: 350, i: ["sony.png"] },
+        { n: "Termo Negro/Azul", p: 90, i: ["https://dcdn-us.mitiendanube.com/stores/002/059/290/products/028-048-foto11-73e4523875c89cf7bf16753833223016-1024-1024.webp"] },
+        { n: "Mini Lámpara Conejo", p: 130, i: ["https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/07/FAN-712B.webp"] },
+        { n: "Luz LED Bicicleta", p: 90, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_823668-MLU72126742088_102023-F.webp"] },
+        { n: "Bocina Link Bits 3\"", p: 120, i: ["bocina oferta.png"] },
+        { n: "AUDIFONO INALAMBRICO HORA", p: 200, i: ["audifono hora.jpg", "audifonohora.jpeg", "audifonohora2.jpeg"] },
+        { n: "AUDIFONO samsung y sony", p: 50, i: ["audifono.jpeg", "audifono2.jpeg", "audifono3.jpeg"] },
+        { n: "SOPORTE para tv", p: 120, i: ["soporte.jpeg", "soporte2.jpeg"] },
+        { n: "AUDIFONO SONY Y SAMSUNG", p: 120, i: ["SAMSUNG3.jpeg", "SONY.jpeg", "SONY2.jpeg"] },
+        { n: "BOCINA con microfono", p: 220, i: ["MICRO1.jpg", "microfono.jpeg", "microfono2.jpeg"] },
+        { n: "MINI bocina", p: 120, i: ["bocinachica.jpeg", "chica2.jpeg"] },
+        { n: "MINI bocina cilindro", p: 120, i: ["azul.jpeg", "azul2.jpeg"] },
+        { n: "BOCINA con RADIO", p: 150, i: ["radio1.jpeg", "radio2.jpeg"] },
+        { n: "MINI bocina con luz led", p: 110, i: ["1.jpeg", "2.jpeg"] },
+        { n: "BOCINA GRANDE CON LUZ A", p: 450, i: ["5.jpeg", "6.jpeg"] },
+        { n: "BOCINA GRANDE CON LUZ B", p: 450, i: ["7.jpeg", "8.jpeg"] },
+        { n: "USB 32 GB KINGSTON", p: 150, i: ["USB.jpg", "USB2.jpeg", "USB3.jpeg"] },
+        { n: "AUDIFONOS MARCA HORA", p: 250, i: ["HORA.jpg", "HORA2.png", "HORA3.jpeg"] },
+        { n: "MEMORIA USB Kingston 16 GB", p: 140, i: ["usb.png"] },
+        { n: "cargador V8 MARCA HORA", p: 50, i: ["v8.png", "v81.jpeg"] },
+        { n: "Bocina Naranja 3\"", p: 150, i: ["bocina-naranja.png"] },
+        { n: "Bocina Link Bits 6\"", p: 300, i: ["https://http2.mlstatic.com/D_NQ_NP_738539-MLM83975346537_042025-O.webp"] },
+        { n: "USB Kingston 64GB", p: 250, i: ["64.png"] },
+        { n: "Audífonos InPods 12", p: 110, i: ["12.png"] },
+        { n: "Samsung TWS + Powerbank", p: 300, i: ["samsung.png"] },
+        { n: "Bocina Solar Lámpara", p: 300, i: ["https://joinet-images-bucket.s3.us-east-1.amazonaws.com/wp-content/uploads/2025/08/KTS-1437-1.webp"] },
+        { n: "Audífonos Marca HORA Diadema", p: 90, i: ["audifono hora.png"] },
+        { n: "Cargador C a C HORA", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_2X_613434-MLM92661186777_092025-F.webp"] },
+        { n: "Cargador Tipo C HORA", p: 100, i: ["https://papeleriadelahorro.mx/cdn/shop/files/1719014.jpg?v=1751741811"] },
+        { n: "Chip BAIT + Saldo", p: 80, i: ["bait.png"] },
+        { n: "Chip Telcel", p: 50, i: ["telcel.png"] },
+        { n: "lampara led", p: 50, i: ["led.png", "led1.png", "led2.jpeg"] },
+        { n: "Timbre Inalámbrico", p: 150, i: ["https://http2.mlstatic.com/D_NQ_NP_789025-MLM40074442597_122019-O.webp"] },
+        { n: "Timbre con Sensor", p: 150, i: ["sensor.png"] },
+        { n: "Constancia No Derechohabiencia", p: 15, i: ["https://cdn-icons-png.flaticon.com/512/2912/2912761.png"] }
     ];
 
     let carrito = [];
@@ -160,27 +198,88 @@
         const grid = document.getElementById('grid');
         grid.innerHTML = "";
         data.forEach(p => {
-            const fotos = p.i.map((img, i) => `<img src="${img}" class="${i===0?'active':''}" data-idx="${i}">`).join('');
             grid.innerHTML += `
                 <div class="product-card">
-                    <div class="img-container" onclick='abrirVisor(${JSON.stringify(p.i)})'>${fotos}</div>
+                    <div class="img-container" onclick='abrirVisor(${JSON.stringify(p.i)})'>
+                        <img src="${p.i[0]}">
+                    </div>
                     <h3>${p.n}</h3>
                     <div class="price">$${p.p}.00</div>
-                    <button class="btn-add" onclick="agregar('${p.n} ($${p.p})')">Añadir al pedido</button>
+                    <button class="btn-add" onclick="agregar('${p.n}', ${p.p})">Añadir al pedido</button>
                 </div>`;
         });
     }
 
-    // Cambia fotos automáticamente en la cuadrícula
-    setInterval(() => {
-        document.querySelectorAll('.img-container').forEach(c => {
-            const imgs = c.querySelectorAll('img');
-            const active = c.querySelector('img.active');
-            let next = (parseInt(active.dataset.idx) + 1) % imgs.length;
-            active.classList.remove('active');
-            imgs[next].classList.add('active');
+    function agregar(nombre, precio) {
+        carrito.push({ nombre, precio });
+        actualizarBotonCarrito();
+    }
+
+    function actualizarBotonCarrito() {
+        const btn = document.getElementById('cart-btn');
+        const total = document.getElementById('total');
+        if (carrito.length > 0) {
+            btn.style.display = 'block';
+            total.innerText = carrito.length;
+        } else {
+            btn.style.display = 'none';
+        }
+    }
+
+    function abrirCarrito() {
+        const lista = document.getElementById('lista-carrito-detalles');
+        const totalDiv = document.getElementById('total-pago');
+        lista.innerHTML = "";
+        let suma = 0;
+        carrito.forEach((item, index) => {
+            suma += item.precio;
+            lista.innerHTML += `
+                <div class="cart-item">
+                    <span>${item.nombre} - $${item.precio}</span>
+                    <button class="btn-remove" onclick="quitarDelCarrito(${index})">Eliminar</button>
+                </div>`;
         });
-    }, 3000);
+        totalDiv.innerText = `Total: $${suma}.00`;
+        document.getElementById('cartModal').style.display = 'flex';
+    }
+
+    function quitarDelCarrito(index) {
+        carrito.splice(index, 1);
+        actualizarBotonCarrito();
+        if (carrito.length === 0) cerrarModales();
+        else abrirCarrito();
+    }
+
+    function abrirCheckout() {
+        document.getElementById('cartModal').style.display = 'none';
+        document.getElementById('checkoutModal').style.display = 'flex';
+    }
+
+    function regresarAlCarrito() {
+        document.getElementById('checkoutModal').style.display = 'none';
+        document.getElementById('cartModal').style.display = 'flex';
+    }
+
+    function cerrarModales() {
+        document.querySelectorAll('#cartModal, #checkoutModal, #imageModal').forEach(m => m.style.display = 'none');
+    }
+
+    function buscar() {
+        const t = document.getElementById('busqueda').value.toLowerCase();
+        render(productos.filter(p => p.n.toLowerCase().includes(t)));
+        const ofertaSection = document.getElementById('ofertaEspecial');
+        ofertaSection.style.display = t === "" ? "flex" : "none";
+    }
+
+    function enviar() {
+        const n = document.getElementById('nom').value;
+        const d = document.getElementById('dir').value;
+        if(!n || !d) return alert("Llena tus datos");
+        let listaTexto = carrito.map(item => `- ${item.nombre} ($${item.precio})`).join("\n");
+        let total = carrito.reduce((s, i) => s + i.precio, 0);
+        const msg = encodeURIComponent(`🛒 *NUEVO PEDIDO*\n👤 Cliente: ${n}\n📍 Dir: ${d}\n\n📦 PRODUCTOS:\n${listaTexto}\n\n💰 *TOTAL: $${total}.00*`);
+        window.open("https://wa.me/522361231236?text=" + msg);
+    }
 
     function abrirVisor(fotos) {
         imgsActuales = fotos; idxImg = 0;
@@ -193,28 +292,7 @@
         document.getElementById('imgFull').src = imgsActuales[idxImg];
     }
 
-    document.getElementById('imageModal').onclick = function(e) {
-        if(e.target == this) this.style.display = 'none';
-    };
-
-    function agregar(item) {
-        carrito.push(item);
-        document.getElementById('cart-btn').style.display = 'block';
-        document.getElementById('total').innerText = carrito.length;
-    }
-
-    function buscar() {
-        const t = document.getElementById('busqueda').value.toLowerCase();
-        render(productos.filter(p => p.n.toLowerCase().includes(t)));
-    }
-
-    function enviar() {
-        const n = document.getElementById('nom').value;
-        const d = document.getElementById('dir').value;
-        if(!n || !d) return alert("Faltan datos");
-        const msg = encodeURIComponent(`🛒 *PEDIDO MINI SURTIDITO*\n👤 ${n}\n📍 ${d}\n📦 ${carrito.join("\n")}`);
-        window.open("https://wa.me/522361231236?text=" + msg);
-    }
+    document.getElementById('imageModal').onclick = function(e) { if(e.target == this) this.style.display = 'none'; };
 
     render(productos);
 </script>
